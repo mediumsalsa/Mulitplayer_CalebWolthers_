@@ -25,7 +25,7 @@ public class TestLobby : MonoBehaviour
         {
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
-        
+
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
@@ -39,7 +39,7 @@ public class TestLobby : MonoBehaviour
         if (hostLobby != null)
         {
             heartbeatTimer -= Time.deltaTime;
-            if (heartbeatTimer < 0f) 
+            if (heartbeatTimer < 0f)
             {
                 float heartbeatTimerMax = 15;
                 heartbeatTimer = heartbeatTimerMax;
@@ -70,7 +70,7 @@ public class TestLobby : MonoBehaviour
 
             Debug.Log("Created Lobby! " + lobby.Name + " " + lobby.MaxPlayers + " " + lobby.Id + " " + lobby.LobbyCode);
         }
-        catch (LobbyServiceException e) 
+        catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
@@ -110,7 +110,7 @@ public class TestLobby : MonoBehaviour
     }
 
     [Command]
-    private async void JoinLobby(string lobbyCode)
+    private async void JoinLobbyByCode(string lobbyCode)
     {
         try
         {
@@ -123,6 +123,19 @@ public class TestLobby : MonoBehaviour
             Debug.Log(e);
         }
 
+    }
+
+    [Command]
+    private async void JoinLobbyQuick()
+    {
+        try
+        {
+            LobbyService.Instance.QuickJoinLobbyAsync();
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
     }
 
 
