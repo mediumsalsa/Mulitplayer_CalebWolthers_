@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\ClientNetworkTransform.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
+    <Compile Include="Assets\Scripts\TestLobby.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
     <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
@@ -360,6 +361,12 @@
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Library\PackageCache\com.unity.services.wire@1.2.0\Plugins\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="mcs">
+      <HintPath>Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
@@ -736,6 +743,9 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Multiplayer.Tools.NetworkSolutionInterface">
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetworkSolutionInterface.dll</HintPath>
     </Reference>
@@ -765,6 +775,9 @@
     </Reference>
     <Reference Include="Unity.Netcode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Netcode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Environments">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.Tools.NetStats">
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetStats.dll</HintPath>
@@ -798,6 +811,9 @@
     </Reference>
     <Reference Include="Unity.Multiplayer.Tools.NetworkProfiler.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Tools.NetworkProfiler.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Analytics">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
@@ -892,6 +908,12 @@
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Services.Authentication">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Lobbies">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Lobbies.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
     </Reference>
@@ -927,6 +949,54 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
+      <Project>{4755221F-CBB4-A0C5-7206-E9898D82EDD6}</Project>
+      <Name>QFSW.QC.ScanRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Demo.csproj">
+      <Project>{DB828175-1846-C752-314B-3DE7C6BAEF0A}</Project>
+      <Name>QFSW.QC.Demo</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Editor.Tools.csproj">
+      <Project>{693B75B6-D9A5-5861-6E88-0D2483B9C8E7}</Project>
+      <Name>QFSW.QC.Editor.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Serializers.csproj">
+      <Project>{1BE1CDD0-41D0-AADD-3EF7-6B1298A3B76C}</Project>
+      <Name>QFSW.QC.Serializers</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Grammar.csproj">
+      <Project>{77AAC7C7-89AD-60A2-0FBD-A39EFC17692E}</Project>
+      <Name>QFSW.QC.Grammar</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.QGUI.csproj">
+      <Project>{1CA82EEC-F68C-06FC-388A-62EF11445A68}</Project>
+      <Name>QFSW.QC.QGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Editor.csproj">
+      <Project>{BF01A0A3-DCE1-1392-50E0-78304F8A6244}</Project>
+      <Name>QFSW.QC.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Parsers.csproj">
+      <Project>{31631C8E-A0D2-4618-2AE2-93B85258B516}</Project>
+      <Name>QFSW.QC.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Suggestors.csproj">
+      <Project>{51FBFECB-E4CF-9008-AB35-6183D042CFB1}</Project>
+      <Name>QFSW.QC.Suggestors</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.Extras.csproj">
+      <Project>{7416CD50-AA09-57D9-0BE4-F8F57CA26B3C}</Project>
+      <Name>QFSW.QC.Extras</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.UI.csproj">
+      <Project>{30C60A70-994B-8E2C-84DC-BA194BD97C52}</Project>
+      <Name>QFSW.QC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.csproj">
+      <Project>{792D1C2B-37B0-E392-6818-8337F8789D55}</Project>
+      <Name>QFSW.QC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
