@@ -16,6 +16,7 @@ public class TestLobby : MonoBehaviour
 
     private float heartbeatTimer;
 
+    private string playerName; 
 
     private async void Start()
     {
@@ -27,6 +28,9 @@ public class TestLobby : MonoBehaviour
         };
 
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        playerName = "Caleb" + UnityEngine.Random.Range(10, 99);
+        Debug.Log(playerName);
     }
 
     private void Update()
@@ -61,6 +65,8 @@ public class TestLobby : MonoBehaviour
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = true,
+                Player = GetPlayer()
+
             };
 
 
@@ -69,6 +75,8 @@ public class TestLobby : MonoBehaviour
             hostLobby = lobby;
 
             Debug.Log("Created Lobby! " + lobby.Name + " " + lobby.MaxPlayers + " " + lobby.Id + " " + lobby.LobbyCode);
+
+            PrintPlayers(hostLobby);
         }
         catch (LobbyServiceException e)
         {
@@ -114,6 +122,11 @@ public class TestLobby : MonoBehaviour
     {
         try
         {
+            JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
+            { 
+                Player = GetPlayer()
+            };
+
             await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode);
 
             Debug.Log("Joined lobby with code " + lobbyCode);
@@ -135,6 +148,24 @@ public class TestLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+        }
+    }
+
+    private Player GetPlayer()
+    {
+        return new Player {
+            Data = new Dictionary<string, PlayerDataObject> {
+                { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, playerName) }
+            }
+        };
+    }
+
+    private void PrintPlayers(Lobby lobby)
+    {
+        Debug.Log("Players in lobby " + lobby.Name);
+        foreach (Player player in lobby.Players)
+        {
+            Debug.Log(player.Id + " " + player.Data["PlayerName"].Value);
         }
     }
 
