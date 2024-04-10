@@ -6,9 +6,6 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using QFSW.QC;
 using UnityEngine;
-
-
-
 public class TestLobby : MonoBehaviour
 {
 
@@ -271,7 +268,37 @@ public class TestLobby : MonoBehaviour
         }
     }
 
-    //private v
+    [Command]
+    private async void MigrateLobbyHost()
+    {
+        try
+        {
+            hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            {
+                HostId = joinedLobby.Players[1].Id
+            });
+            joinedLobby = hostLobby;
+
+            PrintPlayers(hostLobby);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    [Command]
+    private async void DeleteLobby()
+    {
+        try
+        {
+            await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
 
 
 
